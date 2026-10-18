@@ -1,0 +1,168 @@
+:root {
+  /* safe areas (notches, home indicator), read by the touch layout */
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  font-family: system-ui, sans-serif;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#screen {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #000;
+  display: block;
+}
+
+/* touch controls: a floating stick on the left, three buttons under the right thumb */
+#touch {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+body.touch #touch {
+  display: block;
+}
+
+.stick {
+  position: absolute;
+  width: 116px;
+  height: 116px;
+  margin: -58px 0 0 -58px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0.45;
+  transition: opacity 0.15s;
+}
+.stick.active {
+  opacity: 0.9;
+}
+.stick .knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  margin: -25px 0 0 -25px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+.stick.run .knob {
+  background: rgba(255, 200, 80, 0.7);
+}
+
+.btn {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transform: translate(-50%, -50%);
+  transition: background 0.05s;
+}
+.btn.down {
+  background: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+#btn-attack {
+  border-color: rgba(255, 120, 90, 0.6);
+}
+#btn-attack.down {
+  background: rgba(255, 110, 70, 0.55);
+}
+#btn-jump {
+  border-color: rgba(120, 190, 255, 0.6);
+}
+#btn-jump.down {
+  background: rgba(100, 170, 255, 0.55);
+}
+#btn-magic {
+  border-color: rgba(120, 140, 255, 0.5);
+  color: rgba(170, 180, 255, 0.7);
+}
+#btn-magic.down {
+  background: rgba(110, 120, 255, 0.55);
+}
+#btn-pause {
+  position: absolute;
+  top: max(8px, env(safe-area-inset-top));
+  right: max(8px, env(safe-area-inset-right));
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* the smoothing filter (src/filter.ts), laid over the game's canvas when on */
+#screen-gl {
+  position: fixed;
+  pointer-events: none;
+  background: #000;
+}
+
+/* touch: switches the smoothing filter, beside the pause button */
+#btn-filter {
+  position: absolute;
+  top: max(8px, env(safe-area-inset-top));
+  right: calc(max(8px, env(safe-area-inset-right)) + 44px);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.5);
+  font: bold 11px sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+#btn-filter.on {
+  color: #ff0;
+  border-color: rgba(255, 255, 0, 0.5);
+}
+
+/* the ending, rendered from the original (tools/render-video.ts), shown over the canvas */
+#ending {
+  display: none;
+  position: absolute;
+  image-rendering: pixelated;
+  background: #000;
+}
+#ending.show {
+  display: block;
+}

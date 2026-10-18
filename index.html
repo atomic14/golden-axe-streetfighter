@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Golden Axe" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.png" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <title>Golden Axe Street Fighter</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="screen" width="320" height="224"></canvas>
+      <video id="ending" playsinline preload="none"></video>
+      <div id="touch">
+        <div class="stick" id="stick"><div class="knob"></div></div>
+        <div class="btn" id="btn-attack"><span>ATTACK</span></div>
+        <div class="btn" id="btn-jump"><span>JUMP</span></div>
+        <div class="btn" id="btn-magic"><span>MAGIC</span></div>
+        <div id="btn-filter">HD</div>
+        <div id="btn-pause">II</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

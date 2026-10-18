@@ -1,0 +1,14 @@
+import { loadRoms } from '../rom';
+import { scanAnims, findAnims, chainAnims } from '../anims';
+import { readFileSync } from 'node:fs';
+const { prog } = loadRoms(process.argv[2]);
+const m = scanAnims(prog);
+const asm = readFileSync('work/prog.asm', 'utf8');
+const extra = [...asm.matchAll(/\$([0-9a-f]{3,5})\b/g)].map((x) => parseInt(x[1], 16)).filter((v) => !(v & 1));
+const known = chainAnims(prog, findAnims(prog, extra));
+const frames = new Set<number>();
+for (const s of m.values()) for (const st of s) frames.add(st.frame);
+console.log('scan', m.size, 'frames', frames.size, 'known', known.size, 'known missing from scan', [...known.keys()].filter((k) => !m.has(k)).length);
+const bins = new Map<number, number>();
+for (const a of m.keys()) bins.set(a >> 12, (bins.get(a >> 12) ?? 0) + 1);
+console.log([...bins].sort((a, b) => a[0] - b[0]).map(([k, v]) => `${k.toString(16)}:${v}`).join(' '));

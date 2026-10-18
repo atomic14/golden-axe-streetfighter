@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import { loadRoms } from '../rom';
+import { findAnims, chainAnims } from '../anims';
+const { prog } = loadRoms(process.argv[2]);
+const asm = readFileSync('work/prog.asm', 'utf8');
+const extra = [...asm.matchAll(/\$([0-9a-f]{3,5})\b/g)].map((m) => parseInt(m[1], 16)).filter((v) => !(v & 1));
+const m = chainAnims(prog, findAnims(prog, extra));
+console.log('anims', m.size);
+const frames = new Set<number>();
+for (const s of m.values()) for (const st of s) frames.add(st.frame);
+console.log('frames covered', frames.size);

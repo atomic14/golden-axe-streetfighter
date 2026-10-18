@@ -1,0 +1,10 @@
+tap('Enter'); advance(20); tap('Enter');
+while (game.state !== 'play') await sleep(50);
+advance(5);
+await shot('start');
+K('KeyD', true); advance(150); K('KeyD', false); advance(5);
+await shot('walked');
+tap('KeyJ'); advance(6);
+await shot('attack');
+const h = game.heroes[0];
+return [game.state, h.x.toString(16), h.z.toString(16), h.y.toString(16), h.state, game.stage.camx, game.stage.actors.map(a => a.constructor.name + ':' + (a.kind?.name ?? '') + ':' + a.state)];
