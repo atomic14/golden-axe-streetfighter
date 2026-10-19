@@ -1,6 +1,11 @@
 # Golden Axe Street Fighter
 
-A one-on-one fighting game made from the [Golden Axe browser port](../golden-axe), on the same
+**Play it at [golden-axe-sf.atomic14.com](https://golden-axe-sf.atomic14.com)**, on a desktop, with
+a gamepad, or on your phone.
+
+![Battle 2: Ax Battler against Tyris Flare, both played by the computer, with throws, jump attacks and health bars draining](docs/versus.gif)
+
+A one-on-one fighting game made from the [Golden Axe browser port](https://github.com/atomic14/golden-axe) ([play it](https://golden-axe.atomic14.com)), on the same
 engine with the same ROM-derived art, sound and music. Despite the name, it isn't Street Fighter
 rebuilt from Golden Axe sprites: the fighting is the arcade game's own (the combo string, walking in to grab,
 knee and throw, the run and dash attack, the jump attack, the back attack and magic), with two
@@ -46,6 +51,9 @@ npx tsx tools/play.ts tests/versus.js 'http://localhost:5173/?demo&ladders=2'
 # one rung over and over (&stay), to measure a boss: 2 Bad Brother, 3 knight, 4 Death Adder
 npx tsx tools/play.ts tests/versus.js 'http://localhost:5173/?demo&stay&rung=4&fights=12'
 ```
+
+`tools/versus-gif.ts` records the GIF above from the demo (fight 2, Ax against Tyris):
+`npx tsx tools/versus-gif.ts 1 0 900 docs/versus.gif`.
 
 `tests/ladder-shots.js` takes a screenshot of each rung's VS screen and fight. Over 12 fights each,
 the demo player beats the Bad Brother and the knight about 90% of the time and Death Adder
