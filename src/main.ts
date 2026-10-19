@@ -71,6 +71,7 @@ async function boot() {
     }
     game.draw();
     filter.render();
+    document.body.classList.toggle('menu', game.state === 'title' || game.state === 'select');
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);

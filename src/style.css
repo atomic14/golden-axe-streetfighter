@@ -166,3 +166,28 @@ body.touch #touch {
 #ending.show {
   display: block;
 }
+
+/* link to the source, on the title and select screens only */
+#source {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  text-decoration: none;
+}
+#source:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+body.menu #source {
+  display: flex;
+}
