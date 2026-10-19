@@ -151,6 +151,7 @@ export class Versus {
         if (this.t >= 180) {
           if (Math.max(...this.wins) >= WINS) {
             this.go('over');
+            this.track('fight_end', { won: this.won, rounds: this.wins.join('-') });
             audio.music(this.won ? 'select' : 'gameover');
           } else {
             this.round++;
@@ -165,13 +166,19 @@ export class Versus {
           // ?stay: the same fight again (for tests measuring one rung)
           else if (params.has('stay')) void this.startFight(this.rung);
           else if (this.rung + 1 < this.rungs.length) void this.startFight(this.rung + 1);
-          else this.startEnding();
+          else {
+            this.track('ending', {});
+            this.startEnding();
+          }
         }
         break;
       case 'continue':
         // like feeding the arcade another coin: the same fight again
-        if ((this.t > 30 && any) || (this.demo && this.t > 60)) void this.startFight(this.rung);
-        else if (this.t >= 600) {
+        if ((this.t > 30 && any) || (this.demo && this.t > 60)) {
+          this.track('continue', {});
+          void this.startFight(this.rung);
+        } else if (this.t >= 600) {
+          this.track('game_over', {});
           this.go('gameover');
           audio.music('gameover');
         }
@@ -222,9 +229,23 @@ export class Versus {
     }
   }
 
+  /**
+   * A Google Analytics event (index.html loads the tag on the live site only), with the hero and
+   * how far up the ladder they are. Not for the demo.
+   */
+  private track(name: string, params: Record<string, string | number | boolean>) {
+    const gtag = (window as { gtag?: (...a: unknown[]) => void }).gtag;
+    if (this.demo || !gtag) return;
+    const r = this.rungs[this.rung];
+    const opponent = !r ? '' : 'boss' in r ? r.name : HEROES[r.hero].name.split(' ')[0];
+    gtag('event', name, { hero: HEROES[this.choice].name.split(' ')[0], rung: this.rung + 1, opponent, ...params });
+  }
+
   startLadder(hero: number) {
     this.choice = hero;
     this.rungs = ladder(hero);
+    this.rung = 0;
+    this.track('ladder_start', {});
     // ?rung=n starts further up (for tests)
     void this.startFight(Number(params.get('rung') ?? 0));
   }

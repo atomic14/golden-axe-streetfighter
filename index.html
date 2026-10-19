@@ -13,6 +13,19 @@
     <link rel="apple-touch-icon" href="./icon.png" />
     <title>Golden Axe Street Fighter</title>
     <link rel="stylesheet" href="/src/style.css" />
+    <!-- Google tag (gtag.js), on the live site only: not local runs or tests -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      if (/(^|\.)atomic14\.com$/.test(location.hostname)) {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Z2NNW0SKNP';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-Z2NNW0SKNP');
+      }
+    </script>
   </head>
   <body>
     <div id="app">
